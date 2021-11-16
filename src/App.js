@@ -1,20 +1,47 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 
-class App extends Component {
-  render() {
+function App() {
+
+
+  const [ invitado, guadarInvitado] = useState({});
+
+  const [ invitados, guardarIncitados] = useState([]);
+
+
+  const handleChange = e => {
+    guadarInvitado({
+        ...invitado,
+        [e.target.name] : e.target.value
+    })
+  }
+
+  const agregarInvitado = (e) =>{
+    e.preventDefault();
+    guardarIncitados([...invitados, invitado]);
+  }
+
+  const nombre = 'first-name'; 
+  const apellido = 'last-name'; 
+
     return (
       <div className="container">
         <div className="row">
           <div className="col-sm-6 col-sm-offset-3">
-            <form>
+            <form
+              onSubmit={agregarInvitado}
+            >
               <div className="form-group">
                 <label htmlFor="first-name">Nombre</label>
-                <input type="text" className="form-control" name="first-name" />
+                <input type="text" className="form-control" name="first-name" 
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="form-group">
                 <label htmlFor="last-name">Apellido</label>
-                <input type="text" className="form-control" name="last-name" />
+                <input type="text" className="form-control" name="last-name"
+                  onChange={handleChange}
+                 />
               </div>
 
               <div className="action">
@@ -30,16 +57,22 @@ class App extends Component {
                 </tr>
               </thead>
               <tbody>
-
+                  { 
+                    invitados.map((list)=>
+                      <tr>
+                        <td>{list[nombre]}</td>
+                        <td>{list[apellido]}</td>
+                      </tr>
+                    )
+                  }
               </tbody>
             </table>
           </div>
         </div>
       </div>
     )
-  }
 }
 
-export default App
+export default App;
 
 
